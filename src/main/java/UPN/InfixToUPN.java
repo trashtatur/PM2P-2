@@ -14,9 +14,9 @@ public final class InfixToUPN {
     }
 
     public static Queue<String> process(String line) {
-        Scanner scanner=new Scanner(line);
-        Pattern delim=Pattern.compile("\\s");
-        scanner.useDelimiter(delim);
+
+            //LOOK SOMETHING HAPPENED HERE!
+
     }
 
 }
