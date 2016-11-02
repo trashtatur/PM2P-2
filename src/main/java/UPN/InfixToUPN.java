@@ -54,8 +54,7 @@ public final class InfixToUPN {
                 /* 4 b) sonst: nehme solange Operatoren vom Stack und schreibe diese in die Queue, wie
                         die Operatoren auf dem Stack höhere Präzedenz als op haben. Öffnende
                         Klammern '(' werden vom Stack genommen und nicht in die Queue geschrieben.
-                        Danach wird op auf den Stack gelegt. Ausnahme: Schließende Klammern werden
-                        nicht auf den Stack gelegt.
+
                 */
                 else {
                     while (OpUtil.higherPrecedence(stack.peek(),op)) {
@@ -67,7 +66,23 @@ public final class InfixToUPN {
                             queue.add(stack.pop());
                         }
                     }
+                    //Danach wird op auf den Stack gelegt. Ausnahme: Schließende Klammern werden
+                    //nicht auf den Stack gelegt.
+                    if (!op.equals(")")) stack.push(op);
                 }
+            }
+        }
+        /*
+        5. Wenn die Eingabe abgearbeitet ist, dann nehme alle noch verbliebenen Operatoren vom
+           Stack und schreibe diese in die Queue. Öffnende Klammern '(' werden vom Stack
+           genommen und nicht in die Queue geschrieben.
+        */
+        while (!stack.isEmpty()) {
+            if (stack.peek().equals("(")) {
+                stack.pop();
+            }
+            else {
+                queue.add(stack.pop());
             }
         }
     return queue;
