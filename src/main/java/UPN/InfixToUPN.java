@@ -12,7 +12,6 @@ public final class InfixToUPN {
 
     public static void main(String[] args) {
 
-        Scanner scaninput=new Scanner(System.in);
         while (true) {
             System.out.println(">> INPUT");
             Scanner scanner = new Scanner(System.in);
@@ -35,21 +34,26 @@ public final class InfixToUPN {
         Pattern delim=Pattern.compile("\\s");
         scanner.useDelimiter(delim);
 
-        Pattern numbers=Pattern.compile("\\s*(\\d+)\\s*");
-        Matcher matchNum=numbers.matcher(scanner.next());
+        Pattern numbers=Pattern.compile("\\d+");
 
-        Pattern operators=Pattern.compile("\\s*(\\+|-|\\*|/|\\(|\\)|,)\\s*");
-        Matcher matchOp=operators.matcher(scanner.next());
+
+        Pattern operators=Pattern.compile("\\+|–|\\*|/|\\(|\\)|,");
+
 
         //2. Lies die Zeichenkette von links nach rechts
         while (scanner.hasNext()) {
+            String actualToken=scanner.next();
+            Matcher matchOp=operators.matcher(actualToken);
+            Matcher matchNum=numbers.matcher(actualToken);
+
             //3. Wird eine Zahl gelesen wird, dann schreibe diese in die Queue
             if (matchNum.matches()) {
-                queue.add(matchNum.group(1));
+                queue.add(actualToken);
+
             }
             //4. Wird ein Operator (Variable op) gelesen, dann
             else if (matchOp.matches()) {
-                String op=matchOp.group(0);
+                String op=actualToken;
                 /* 4 a) a. wenn der Stack leer ist oder das oberster Element des Stacks die öffnende
                 Klammer ist ('(') oder das oberste Element des Stacks geringere Präzedenz als op
                 hat, dann lege op auf den Stack. Präzedenzregel:
@@ -60,14 +64,14 @@ public final class InfixToUPN {
                     OpUtil.lowerPrecedence(stack.peek(),op)) {
 
                         stack.push(op);
-
                 }
                 /* 4 b) sonst: nehme solange Operatoren vom Stack und schreibe diese in die Queue, wie
                         die Operatoren auf dem Stack höhere Präzedenz als op haben. Öffnende
                         Klammern '(' werden vom Stack genommen und nicht in die Queue geschrieben.
                 */
+
                 else {
-                    while (OpUtil.higherPrecedence(stack.peek(),op)) {
+                    while (!stack.isEmpty() && OpUtil.higherPrecedence(stack.peek(),op) ) {
                         if (stack.peek().equals("(")) {
                             stack.pop();
                         }
@@ -82,6 +86,7 @@ public final class InfixToUPN {
                     }
                 }
             }
+
         }
         /*
         5. Wenn die Eingabe abgearbeitet ist, dann nehme alle noch verbliebenen Operatoren vom
@@ -96,7 +101,7 @@ public final class InfixToUPN {
                 queue.add(stack.pop());
             }
         }
-        System.out.println(queue);
+
     return queue;
     }
 
