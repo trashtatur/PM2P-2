@@ -1,4 +1,4 @@
-package UPN;
+package InfixToUPN;
 
 import java.util.ArrayList;
 import java.util.Arrays;
