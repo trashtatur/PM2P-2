@@ -1,4 +1,4 @@
-package InfixCalc;
+package InfixToUPN;
 
 import java.util.Scanner;
 import java.util.Stack;
