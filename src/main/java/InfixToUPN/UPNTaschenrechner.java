@@ -11,8 +11,17 @@ import java.util.regex.Pattern;
 public final class UPNTaschenrechner {
 
     public static void main(String[] args) {
-
+        while (true) {
+            System.out.println(">> INPUT");
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
+            String processedinput = String.join(" ", InfixToUPN.process(input));
+            System.out.println(">> OUTPUT");
+            System.out.println(UPNTaschenrechner.process(processedinput));
+            System.out.println();
+        }
     }
+
     public static Double process(String line) {
         Stack<Double> stack= new Stack<Double>();
         Scanner scanner=new Scanner(line);
@@ -20,12 +29,37 @@ public final class UPNTaschenrechner {
         scanner.useDelimiter(delim);
 
         Pattern numbers=Pattern.compile("\\d+");
-        Pattern operators=Pattern.compile("\\+|–|\\*|/|\\(|\\)|,");
-
+        Pattern operators=Pattern.compile("\\+|–|-|-|\\*|/");
+        System.out.println(line);
         while (scanner.hasNext()) {
+            System.out.println(stack);
             String actualToken=scanner.next();
             Matcher matchNum=numbers.matcher(actualToken);
             Matcher matchOp=operators.matcher(actualToken);
+
+            if (matchNum.matches()) {
+                stack.push(Double.valueOf(actualToken));
+            }
+            else if (matchOp.matches()) {
+                Double num2= stack.pop();
+                Double num1= stack.pop();
+
+                switch (actualToken) {
+                    case "+": stack.push(num1+num2);
+                                break;
+                    case "-": stack.push(num1-num2);
+                                break;
+                    case "–": stack.push(num1-num2);
+                                break;
+                    case "*": stack.push(num1*num2);
+                                break;
+                    case "/": stack.push(num1/num2);
+                                break;
+                }
+
+            }
+
         }
+         return stack.peek();
     }
 }
