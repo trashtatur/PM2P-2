@@ -30,9 +30,8 @@ public final class UPNTaschenrechner {
 
         Pattern numbers=Pattern.compile("\\d+");
         Pattern operators=Pattern.compile("\\+|–|-|-|\\*|/");
-        System.out.println(line);
+
         while (scanner.hasNext()) {
-            System.out.println(stack);
             String actualToken=scanner.next();
             Matcher matchNum=numbers.matcher(actualToken);
             Matcher matchOp=operators.matcher(actualToken);
