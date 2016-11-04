@@ -37,7 +37,7 @@ public final class InfixToUPN {
         Pattern numbers=Pattern.compile("\\d+");
 
 
-        Pattern operators=Pattern.compile("\\+|–|\\*|/|\\(|\\)|,");
+        Pattern operators=Pattern.compile("\\+|–|-|-|\\*|/|\\(|\\)|,");
 
 
         //2. Lies die Zeichenkette von links nach rechts
