@@ -12,11 +12,11 @@ public final class UPNTaschenrechner {
 
     public static void main(String[] args) {
         while (true) {
-            System.out.println(">> INPUT");
+            System.out.println(">IN");
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
             String processedinput = String.join(" ", InfixToUPN.process(input));
-            System.out.println(">> OUTPUT");
+            System.out.println(">OUT");
             System.out.println(UPNTaschenrechner.process(processedinput));
             System.out.println();
         }
